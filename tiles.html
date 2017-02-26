@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   </head>
+
+   <body>
+     <div class="container">
+       <div id="tiles"></div>
+     </div>
+     <script id="template" type="text/ractive">
+     <div class="container input-field col s12 m6">
+
+     <select class="icons" value='{{a}}'>
+       <option value='111' selected></option>
+     {{#each tiles:i}}
+       <option value="{{i}}">{{name}} | {{size_a}}x{{size_b}} | {{in_pack}} in pack | {{price}} $$</option>
+     {{/each}}
+    </select>
+    </div>
+    <br />
+    <label>How many m^2? <input type="text" id="sq_m" value={{sq_m}}></label>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="info">
+    {{#if (a > 100)}}
+    <h1>Select Tile</h1>
+    {{else}}
+    <table>
+      <th>Tile name</th>
+      <th>Tile sizes</th>
+      <th>Tile price</th>
+      <tr>
+       <td>{{tiles[a].name}}</td>
+       <td>{{tiles[a].size_a}}x{{tiles[a].size_b}}</td>
+       <td>{{tiles[a].price}}</td>
+      </tr>
+    </table>
+    <br />
+    <hr />
+    <div class="results">
+
+      <div>You need {{tiles_required}} tiles to cover this surface</div>
+      <div>You need to order {{packs_required}} pack of tiles</div>
+      <div>This will cost {{tiles_required}} * {{tiles[a].price}} - {{tiles_required*tiles[a].price}} $$</div>
+    </div>
+    {{/if}}
+    </div>
+
+
+     </script>
+     <script src='http://cdn.ractivejs.org/latest/ractive.js'></script>
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+     <script>
+
+     var tiles = [
+       {
+         name: 'Tile 1',
+         size_a: 400,
+         size_b: 400,
+         in_pack: 6,
+         price: 20
+       },
+       {
+         name: 'Tile 2',
+         size_a: 450,
+         size_b: 450,
+         in_pack: 5,
+         price: 25
+       },
+       {
+         name: 'Tile 3',
+         size_a: 500,
+         size_b: 450,
+         in_pack: 6,
+         price: 24
+       },
+       {
+         name: 'Tile 4',
+         size_a: 600,
+         size_b: 450,
+         in_pack: 4,
+         price: 26
+       },
+     ];
+
+     var ractive = new Ractive({
+       el: '#tiles',
+       template: '#template',
+       data: {
+          tiles: tiles
+        },
+       calc : function(id){
+         var tiles = this.get('tiles'),
+             sq_m = this.get('sq_m'),
+             tile_surface = (tiles[id].size_a * tiles[id].size_b) /  (1000000),
+             in_pack = tiles[id].in_pack;
+             tiles_required = Math.ceil(sq_m / tile_surface);
+             packs_required = Math.ceil(tiles_required / in_pack);
+             this.set({
+               tiles_required: tiles_required,
+               packs_required: packs_required
+             })
+         console.log(tile_surface+" m2", tiles_required);
+       },
+        onchange: function(){
+          this.calc(this.get('a'));
+        }
+     });
+     </script>
+   </body>
+ </html>
