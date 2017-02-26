@@ -1,0 +1,72 @@
+body{
+  background:#fafafa;
+  font-family: arial
+}
+
+#app{
+  margin:40px auto;
+  width: 650px;
+  overflow:hidden;
+}
+#app2{
+  margin:40px auto;
+  width: 1300px;
+  overflow:hidden;
+}
+.wrapper {
+  display: flex;
+  flex-basis: 650px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.btn{
+  font-size: 12px;
+}
+.item {
+  width: 650px;
+}
+
+.slideshow{
+  border:5px #fff solid;
+}
+
+.prev, .next{
+  font-size:40px;
+  margin-top:-300px;
+  color:#fff;
+  background: #333;
+  padding: 0px 15px 10px 15px;
+  cursor:pointer;
+}
+
+.next{
+  float:right;
+  padding-right:10px;
+}
+
+.prev{
+  float:left;
+  padding-left:10px;
+}
+
+.caption{
+  background:#333;
+  color:#fff;
+  padding: 5px 10px;
+  font-size:24px;
+}
+img{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.margin-top {
+  margin-top: 25px;
+}
+.alt-bg {
+  background-color: grey;
+}
+.padding {
+  padding: 25px;
+}

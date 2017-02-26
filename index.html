@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+	<link rel="stylesheet" href="styles.css" />
+	<title>Ractive Slideshow</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script id="template" type="text/ractive">
+		<div class="slideshow">
+			<div class="main">
+				<div class="main-image" style="background-image: url({{image.src}}); width:640px;height:420px">
+
+				</div>
+				<div class="caption">
+					{{image.caption}}
+				</div>
+				<a class="prev" on-click="goto:{{current-1}}">
+					<span>&laquo;</span>
+				</a>
+				<a class="next" on-click="goto:{{current+1}}">
+					<span>&raquo;</span>
+				</a>
+			</div>
+		</div>
+	</script>
+	<script src='http://cdn.ractivejs.org/latest/ractive.js'></script>
+	<script>
+	var Slideshow = Ractive.extend({
+		template: '#template',
+		goto: function(imageNum){
+			var images = this.get('images');
+
+			while(imageNum < 0){
+				imageNum += images.length;
+			}
+			//Maximum
+			imageNum %= images.length;
+
+			//Update view
+			this.set({
+				image: images[imageNum],
+				current: imageNum
+			});
+		},
+		oninit: function(options){
+			this.on('goto', function(event, index){
+				this.goto(index);
+			});
+			// start on first image
+			this.goto(0);
+		}
+	});
+
+	var images = [
+		{
+			src: 'img/1.jpeg',
+			caption: 'Lemons'
+		},
+		{
+			src: 'img/2.jpeg',
+			caption: 'Blueberries'
+		},
+		{
+			src: 'img/3.jpeg',
+			caption: 'Strawberries'
+		},
+		{
+			src: 'img/4.jpeg',
+			caption: 'Apple'
+		}
+	]
+	var slideshow = new Slideshow({
+		el: '#app',
+		data: {
+			images: images
+		}
+	})
+	</script>
+</body>
+</html>

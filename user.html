@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <title>Ractive project</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="app2"></div>
+    </div>
+    <script id="template" type="rext/ractive">
+    <div class="wrapper">
+    {{#each users:i}}
+      <div class="item row margin-top alt-bg padding">
+        <div class="col s4 center">
+          <img src="{{avatar}}" />
+          <br />
+          <br />
+          <div>
+            <a on-click="getName:{{i}}" class="waves-effect waves-light btn">Display name </a>
+          </div>
+          <br />
+          <div>
+            <a on-click="getCity:{{i}}" class="waves-effect waves-light btn">Display city</a>
+          </div>
+          <br />
+          <div>
+            <a on-click="getState:{{i}}" class="waves-effect waves-light btn">Display state</a>
+          </div>
+        </div>
+        <div class="col s8">
+          <h1>{{name}}</h1>
+          <span class="new badge left green" data-badge-caption="Posts">{{shares.posts}}</span>
+          <span class="new badge left red" data-badge-caption="Photos">{{shares.photos}}</span>
+          <span class="new badge left blue" data-badge-caption="Videos">{{shares.videos}}</span>
+          <br />
+          <hr class="margin-top"/>
+          <ul class="collection margin-top">
+            <li class="collection-item">Age: {{age}}</li>
+            <li class="collection-item">Location: {{location.city}}, {{location.state}}</li>
+          </ul>
+          <h3>Bio</h3>
+          <p>
+            {{bio}}
+          </p>
+        </div>
+      </div>
+    {{/each}}
+    </div>
+    </script>
+    <script src='http://cdn.ractivejs.org/latest/ractive.js'></script>
+    <script>
+      var users = [
+        {
+           name: 'Jhon Doe',
+           age: 30,
+           bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+           avatar: 'http://rs233.pbsrc.com/albums/ee76/WildCatZA/snoop.jpg~c200',
+           location: {
+             city: 'Boston',
+             state: 'Massachusets'
+             },
+           shares: {
+             posts: 230,
+             photos: 90,
+             videos: 10
+             }
+         },
+         {
+            name: 'Mike Smith',
+            age: 19,
+            bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            avatar: 'http://steamavatars.co/wp-content/uploads/2016/01/funny_batman_steam_avatars.jpg',
+            location: {
+              city: 'New York',
+              state: 'Washington'
+             },
+            shares: {
+              posts: 140,
+              photos: 553,
+              videos: 4
+             }
+         },
+         {
+            name: 'Bob Wick',
+            age: 55,
+            bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            avatar: 'http://steamavatars.co/wp-content/uploads/2016/01/blue_cat_steam_avatars-2.jpg',
+            location: {
+              city: 'Los Angeles',
+              state: 'Seeatle'
+             },
+            shares: {
+              posts: 22,
+              photos: 45,
+              videos: 5
+             },
+           },
+           {
+              name: 'Rob McCain',
+              age: 32,
+              bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+              avatar: 'http://i48.tinypic.com/260v86c.png',
+              location: {
+                city: 'Sydney',
+                state: 'Whatever'
+               },
+              shares: {
+                posts: 15,
+                photos: 25,
+                videos: 11
+               },
+             }
+      ];
+      var ractive = new Ractive({
+        el: '#app2',
+        template: '#template',
+        data: {
+          users: users
+        }
+      });
+
+      ractive.on({
+        getName: function(i){
+          this.set('i', i);
+          alert('Name is ' + this.get(this.get('i.keypath') +'.name'));
+        },
+        getCity: function(i){
+          this.set('i', i);
+          alert('City is ' + this.get(this.get('i.keypath') +'.location.city'));
+        },
+        getState: function(i){
+          this.set('i', i);
+          alert('State is ' + this.get(this.get('i.keypath') +'.location.state'));
+        }
+      });
+    </script>
+  </body>
+</html>
